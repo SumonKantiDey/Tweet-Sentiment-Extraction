@@ -140,7 +140,6 @@ models/
 *.h5
 *.pkl
 *.pth
-*.txt
 *.bin
 #logs
 *.log

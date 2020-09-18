@@ -3,7 +3,7 @@
 It is hard to tell whether the sentiment behind a specific text. Suppose I have a text also I know the sentiment label of this text. Now the target of the competition is to **extract support phrases for the sentiment labels**.
 
 ```
-Text : That`s very funny. Cute kids Sentiment: positive 
+Text : That`s very funny. Cute kids [Sentiment: positive]
 Extracted phrase : funny
 ```
 # The metric in this competition is the word-level Jaccard score

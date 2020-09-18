@@ -17,6 +17,6 @@ def jaccard(str1, str2):
  
 # Summary of my approach
 ```
-- Learning Rate scheduling
 - Used  Bert-Base-Uncased pre-trained models
 - Holdout validation is around 0.59
+```

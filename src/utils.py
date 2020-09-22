@@ -1,3 +1,8 @@
+from settings import get_module_logger
+import numpy as np
+import torch
+logger = get_module_logger(__name__)
+
 class AverageMeter:
     """Computes and stores the average and current value"""
     def __init__(self):
@@ -21,3 +26,74 @@ def jaccard(str1, str2):
     b = set(str2.lower().split())
     c = a.intersection(b)
     return float(len(c)) / (len(a) + len(b) - len(c))
+
+def calculate_jaccard_score(
+    original_tweet, 
+    target_string, 
+    sentiment_val, 
+    idx_start, 
+    idx_end, 
+    offsets,
+    verbose=False):
+    
+    if idx_end < idx_start:
+        idx_end = idx_start
+        
+    filtered_output  = ""
+    for ix in range(idx_start, idx_end + 1):
+        filtered_output += original_tweet[offsets[ix][0]: offsets[ix][1]]
+        '''
+        If the token is not the last token in the tweet, and the ending offset 
+        of the current token is less than the beginning offset of the following token, 
+        add a space. Basically, add a space when the next token (word piece) 
+        corresponds to a new word 
+        '''
+        if (ix+1) < len(offsets) and offsets[ix][1] < offsets[ix+1][0]:
+            filtered_output += " "
+
+    if sentiment_val == "neutral" or len(original_tweet.split()) < 2:
+        filtered_output = original_tweet
+
+    jac = jaccard(target_string.strip(), filtered_output.strip())
+    return jac, filtered_output
+
+class EarlyStopping:
+    def __init__(self, patience=7, mode="max", delta=0.001):
+        self.patience = patience
+        self.counter = 0
+        self.mode = mode
+        self.best_score = None
+        self.early_stop = False
+        self.delta = delta
+        if self.mode == "min":
+            self.val_score = np.Inf
+        else:
+            self.val_score = -np.Inf
+
+    def __call__(self, epoch_score, model, model_path):
+
+        if self.mode == "min":
+            score = -1.0 * epoch_score
+        else:
+            score = np.copy(epoch_score)
+
+        if self.best_score is None:
+            self.best_score = score
+            self.save_checkpoint(epoch_score, model, model_path)
+        elif score < self.best_score + self.delta:
+            self.counter += 1
+            print('EarlyStopping counter: {} out of {}'.format(self.counter, self.patience))
+            logger.info('EarlyStopping counter: {} out of {}'.format(self.counter, self.patience))
+            if self.counter >= self.patience:
+                self.early_stop = True
+        else:
+            self.best_score = score
+            self.save_checkpoint(epoch_score, model, model_path)
+            self.counter = 0
+
+    def save_checkpoint(self, epoch_score, model, model_path):
+        if epoch_score not in [-np.inf, np.inf, -np.nan, np.nan]:
+            print('Validation score improved ({} --> {}). Saving model!'.format(self.val_score, epoch_score))
+            logger.info('Validation score improved ({} --> {}). Saving model!'.format(self.val_score, epoch_score))
+            torch.save(model.state_dict(), model_path)
+        self.val_score = epoch_score

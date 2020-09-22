@@ -1,7 +1,9 @@
 import config
+import utils
 import pandas as pd 
 import torch
 import numpy as np
+from process import process_data
 
 class TweetDataset:
     def __init__(self, tweet, sentiment, selected_text):
@@ -11,83 +13,28 @@ class TweetDataset:
         self.tokenizer = config.TOKENIZER
         self.max_len = config.MAX_LEN
     
-
     def __len__(self):
         return len(self.tweet)
-    
+
     def __getitem__(self, item):
-        tweet = " ".join(str(self.tweet[item]).split())
-        selected_text = " ".join(str(self.selected_text[item]).split())
+        data = process_data(
+            self.tweet[item], 
+            self.selected_text[item], 
+            self.sentiment[item],
+            self.tokenizer,
+            self.max_len
+        )
 
-        len_st = len(selected_text)
-        idx0 = -1
-        idx1 = -1
-        for ind in (i for i,e in enumerate(tweet) if e == selected_text[0]):
-            if tweet[ind: ind+len_st] == selected_text:
-                idx0 = ind
-                idx1 = ind + len_st -1
-                break
-
-        char_targets = [0] * len(tweet)
-        if idx0 != -1 and idx1 != -1:
-            for j in range(idx0, idx1 + 1):
-                if tweet[j] != " ":
-                    char_targets[j] = 1
-        
-        tok_tweet = self.tokenizer.encode(self.sentiment[item], tweet)
-        tok_tweet_tokens = tok_tweet.tokens
-        tok_tweet_ids = tok_tweet.ids
-        tok_tweet_offsets = tok_tweet.offsets[3:-1]
-        targets = [0] * (len(tok_tweet_tokens) - 4)
-        if self.sentiment[item] == "positive" or self.sentiment[item] == "negative":
-            sub_minus = 8
-        else:
-            sub_minus = 7 
-
-        for j, (offset1, offset2) in enumerate(tok_tweet_offsets):
-            if sum(char_targets[offset1  : offset2]) > 0:
-                targets[j] = 1
-        
-        targets = [0] + [0] + [0] + targets + [0]
-        targets_start = [0] * len(targets)
-        targets_end = [0] * len(targets)
-
-        non_zero = np.nonzero(targets)[0]
-
-        if len(non_zero) > 0:
-            targets_start[non_zero[0]] = 1
-            targets_end[non_zero[-1]] = 1
-        
-        mask = [1] * len(tok_tweet_ids)
-        token_type_ids = [0] * 3 + [1] * (len(tok_tweet_ids) - 3)
-
-        padding_len = self.max_len - len(tok_tweet_ids)
-        ids = tok_tweet_ids + ([0] * padding_len)
-        mask = mask + ([0] * padding_len)
-        token_type_ids = token_type_ids + ([0] * padding_len)
-        targets = targets + ([0] * padding_len)
-        targets_start = targets_start + ([0] * padding_len)
-        targets_end = targets_end + ([0] * padding_len)
-
-        sentiment = [1, 0, 0]
-
-        if self.sentiment[item] == "positive":
-            sentiment = [0, 0, 1]
-        if self.sentiment[item] == "negative":
-            sentiment = [0, 1, 0]
         return {
-            'ids' : torch.tensor(ids, dtype = torch.long),
-            'mask' : torch.tensor(mask, dtype = torch.long),
-            'token_type_ids' : torch.tensor(token_type_ids, dtype = torch.long),
-            'tweet_tokens' : " ".join(tok_tweet_tokens),
-            'targets' : torch.tensor(targets, dtype = torch.long),
-            'targets_start' : torch.tensor(targets_start, dtype = torch.long),
-            'targets_end' : torch.tensor(targets_end, dtype = torch.long),
-            'padding_len' : torch.tensor(padding_len, dtype = torch.long),
-            'orig_tweet' : self.tweet[item],
-            'orig_selected' : self.selected_text[item],
-            'sentiment' : torch.tensor(sentiment, dtype = torch.long),
-            'orig_sentiment': self.sentiment[item]
+            'ids': torch.tensor(data["ids"], dtype=torch.long),
+            'mask': torch.tensor(data["mask"], dtype=torch.long),
+            'token_type_ids': torch.tensor(data["token_type_ids"], dtype=torch.long),
+            'targets_start': torch.tensor(data["targets_start"], dtype=torch.long),
+            'targets_end': torch.tensor(data["targets_end"], dtype=torch.long),
+            'orig_tweet': data["orig_tweet"],
+            'orig_selected': data["orig_selected"],
+            'sentiment': data["sentiment"],
+            'offsets': torch.tensor(data["offsets"], dtype=torch.long)
         }
             
 
@@ -98,8 +45,9 @@ if __name__ == "__main__":
         sentiment = df.sentiment.values,
         selected_text = df.selected_text.values
     )
-    print(df.iloc[1])
-    print(dset[1])
+    print(df.iloc[27])
+    print(dset[27])
+
 
 
 

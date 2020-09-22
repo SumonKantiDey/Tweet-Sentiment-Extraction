@@ -54,9 +54,30 @@
 # # print(tokenizers.__version__) 
 import numpy as np 
   
-p = [np.array([[1,2,3],
-     [4,5,6]])]
-print(p)
-kk = np.vstack(p)
-print(kk)
-print(kk.shape)
+# p = [np.array([[1,2,3],
+#      [4,5,6]])]
+# print(p)
+# kk = np.vstack(p)
+# print(kk)
+# print(kk.shape)
+
+# import pandas as pd 
+
+
+
+
+# # initialize list of lists 
+# data = [["6ce4a4954b","Sooo I will SAD you here in San Diego!!!","Sooo SAD", "negative"],
+#        ["6ce4a4954c","Sooo I SAD will you here in San Diego!!!","Sooo SAD", "negative"]] 
+  
+# # Create the pandas DataFrame 
+# df = pd.DataFrame(data, columns = ["textID","text","selected_text","sentiment"]) 
+  
+# # print dataframe. 
+# print(df)
+from settings import get_module_logger
+
+
+logger = get_module_logger(__name__)
+
+logger.info("TEST HERE")

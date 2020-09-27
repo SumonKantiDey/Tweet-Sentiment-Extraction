@@ -18,5 +18,5 @@ def jaccard(str1, str2):
 # Summary of my approach
 ```
 - Used  Bert-Base-Uncased pre-trained models
-- Holdout validation is around 0.59
+- Holdout validation Acc 0.59
 ```

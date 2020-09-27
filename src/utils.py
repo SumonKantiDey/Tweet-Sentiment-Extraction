@@ -40,6 +40,9 @@ def calculate_jaccard_score(
         idx_end = idx_start
         
     filtered_output  = ""
+    # print("idx_start = ", idx_start)
+    # print("idx_end = ", idx_end)
+
     for ix in range(idx_start, idx_end + 1):
         filtered_output += original_tweet[offsets[ix][0]: offsets[ix][1]]
         '''
@@ -53,6 +56,14 @@ def calculate_jaccard_score(
 
     if sentiment_val == "neutral" or len(original_tweet.split()) < 2:
         filtered_output = original_tweet
+    
+    # if sentiment_val != "neutral" and verbose == True:
+    #     if filtered_output.strip().lower() != target_string.strip().lower():
+    #         print("********************************")
+    #         print(f"Output= {filtered_output.strip()}")
+    #         print(f"Target= {target_string.strip()}")
+    #         print(f"Tweet= {original_tweet.strip()}")
+    #         print("********************************")
 
     jac = jaccard(target_string.strip(), filtered_output.strip())
     return jac, filtered_output

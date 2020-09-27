@@ -61,23 +61,15 @@ import numpy as np
 # print(kk)
 # print(kk.shape)
 
-# import pandas as pd 
+import pandas as pd 
 
 
 
 
-# # initialize list of lists 
-# data = [["6ce4a4954b","Sooo I will SAD you here in San Diego!!!","Sooo SAD", "negative"],
-#        ["6ce4a4954c","Sooo I SAD will you here in San Diego!!!","Sooo SAD", "negative"]] 
+# initialize list of lists 
+data = [["Its coming out the socket I feel like my phones hole is not a virgin. That`s how loose it is... :`(","loose it is...", "negative"],
+ ] 
   
-# # Create the pandas DataFrame 
-# df = pd.DataFrame(data, columns = ["textID","text","selected_text","sentiment"]) 
-  
-# # print dataframe. 
-# print(df)
-from settings import get_module_logger
-
-
-logger = get_module_logger(__name__)
-
-logger.info("TEST HERE")
+# Create the pandas DataFrame 
+df = pd.DataFrame(data, columns = ["text","selected_text","sentiment"]) 
+print(df)

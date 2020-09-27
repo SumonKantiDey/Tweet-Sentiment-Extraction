@@ -2,58 +2,53 @@ import config
 import transformers
 import torch
 import torch.nn as nn
-
+import torch.nn.functional as F
 class TweetModel(transformers.BertPreTrainedModel):
-    """
-    Model class that combines a pretrained bert model with a linear later
-    """
     def __init__(self, conf):
         super(TweetModel, self).__init__(conf)
-        # Load the pretrained RobBERTa model
         self.roberta = transformers.RobertaModel.from_pretrained(config.ROBERTA_PATH, config=conf)
-        # Set 10% dropout to be applied to the RobBERTa backbone's output
         self.drop_out = nn.Dropout(0.1)
-        # 768 is the dimensionality of roberta-base's hidden representations
-        # Multiplied by 2 since the forward pass concatenates the last two hidden representation layers
-        # The output will have two dimensions ("start_logits", and "end_logits")
-        self.l0 = nn.Linear(768 * 2, 2)
-        torch.nn.init.normal_(self.l0.weight, std=0.02)
-    
-    def forward(self, ids, mask, token_type_ids):
-        # Return the hidden states from the BERT backbone
-        # https://github.com/huggingface/transformers/issues/2072
-        # https://github.com/pytorch/fairseq/issues/908
-        # https://huggingface.co/transformers/v2.1.1/_modules/transformers/modeling_roberta.html
+        self.Cov1S = nn.Conv1d(768 * 2, 128 , kernel_size = 2 ,stride = 1 )
+        self.Cov1E = nn.Conv1d(768 * 2, 128, kernel_size = 2 ,stride = 1 )
+        self.Cov2S = nn.Conv1d(128 , 64 , kernel_size = 2 ,stride = 1)
+        self.Cov2E = nn.Conv1d(128 , 64 , kernel_size = 2 ,stride = 1)
+        self.lS = nn.Linear(64 , 1)
+        self.lE = nn.Linear(64 , 1)
+        torch.nn.init.normal_(self.lS.weight, std=0.02)
+        torch.nn.init.normal_(self.lE.weight, std=0.02)
+
         
+    def forward(self, ids, mask, token_type_ids):
         _, _, out = self.roberta(
             ids,
             attention_mask=mask,
             token_type_ids=token_type_ids
-        ) # bert_layers x bs x SL x (768 * 2)
+        )
 
-        # Concatenate the last two hidden states
-        # This is done since experiments have shown that just getting the last layer
-        # gives out vectors that may be too taylored to the original RoBERTa training objectives (MLM + NSP)
-        # Sample explanation: https://bert-as-service.readthedocs.io/en/latest/section/faq.html#why-not-the-last-hidden-layer-why-second-to-last
-        out = torch.cat((out[-1], out[-2]), dim=-1) # bs x SL x (768 * 2)
-        # Apply 10% dropout to the last 2 hidden states
-        out = self.drop_out(out) # bs x SL x (768 * 2)
-        # The "dropped out" hidden vectors are now fed into the linear layer to output two scores
-        logits = self.l0(out) # bs x SL x 2
+        out = torch.cat((out[-1], out[-2]), dim=-1)
+        out = self.drop_out(out)
+        out = out.permute(0,2,1)
+        
+        same_pad1 = torch.zeros(out.shape[0] , 768*2 , 1).cuda()
+        same_pad2 = torch.zeros(out.shape[0] , 128 , 1).cuda()
 
-        # Splits the tensor into start_logits and end_logits
-        # (bs x SL x 2) -> (bs x SL x 1), (bs x SL x 1)
-        start_logits, end_logits = logits.split(1, dim=-1)
+        out1 = torch.cat((same_pad1 , out), dim = 2)
+        out1 = self.Cov1S(out1)
+        out1 = torch.cat((same_pad2 , out1), dim = 2)
+        out1 = self.Cov2S(out1)
+        out1 = F.leaky_relu(out1)
+        out1 = out1.permute(0,2,1)
+        start_logits = self.lS(out1).squeeze(-1)
+        #print(start_logits.shape)
 
-        start_logits = start_logits.squeeze(-1) # (bs x SL)
-        end_logits = end_logits.squeeze(-1) # (bs x SL)
+        out2 = torch.cat((same_pad1 , out), dim = 2)
+        out2 = self.Cov1E(out2)
+        out2 = torch.cat((same_pad2 , out2), dim = 2)
+        out2 = self.Cov2E(out2)
+        out2 = F.leaky_relu(out2)
+        out2 = out2.permute(0,2,1)
+        end_logits = self.lE(out2).squeeze(-1)
+        #print(end_logits.shape)
+
 
         return start_logits, end_logits
-
-
-
-
-
-
-
-

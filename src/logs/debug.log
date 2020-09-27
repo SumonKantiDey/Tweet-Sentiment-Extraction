@@ -1,0 +1,118 @@
+2020-09-23 20:07:52,718 - tensorflow - DEBUG - Falling back to TensorFlow client; we recommended you install the Cloud TPU client directly with pip install cloud-tpu-client.
+2020-09-23 20:08:05,022 - __main__ - INFO - Training is Starting for fold - 0
+2020-09-23 20:22:15,411 - engine - INFO - Jaccard = 0.6994217759065511
+2020-09-23 20:22:15,411 - __main__ - INFO - EPOCHS 0 - Jaccard Score - 0.6994217759065511
+2020-09-23 20:22:15,412 - utils - INFO - Validation score improved (-inf --> 0.6994217759065511). Saving model!
+2020-09-23 20:36:54,270 - engine - INFO - Jaccard = 0.7009800029794965
+2020-09-23 20:36:54,270 - __main__ - INFO - EPOCHS 1 - Jaccard Score - 0.7009800029794965
+2020-09-23 20:36:54,271 - utils - INFO - Validation score improved (0.6994217759065511 --> 0.7009800029794965). Saving model!
+2020-09-23 20:51:31,763 - engine - INFO - Jaccard = 0.7004517539923842
+2020-09-23 20:51:31,763 - __main__ - INFO - EPOCHS 2 - Jaccard Score - 0.7004517539923842
+2020-09-23 20:51:31,764 - utils - INFO - EarlyStopping counter: 1 out of 2
+2020-09-23 20:51:37,210 - __main__ - INFO - Training is Starting for fold - 1
+2020-09-23 21:06:12,353 - engine - INFO - Jaccard = 0.6985196029213292
+2020-09-23 21:06:12,354 - __main__ - INFO - EPOCHS 0 - Jaccard Score - 0.6985196029213292
+2020-09-23 21:06:12,354 - utils - INFO - Validation score improved (-inf --> 0.6985196029213292). Saving model!
+2020-09-23 21:20:49,289 - engine - INFO - Jaccard = 0.7048613902237698
+2020-09-23 21:20:49,289 - __main__ - INFO - EPOCHS 1 - Jaccard Score - 0.7048613902237698
+2020-09-23 21:20:49,289 - utils - INFO - Validation score improved (0.6985196029213292 --> 0.7048613902237698). Saving model!
+2020-09-23 21:35:25,319 - engine - INFO - Jaccard = 0.7074773541063466
+2020-09-23 21:35:25,319 - __main__ - INFO - EPOCHS 2 - Jaccard Score - 0.7074773541063466
+2020-09-23 21:35:25,320 - utils - INFO - Validation score improved (0.7048613902237698 --> 0.7074773541063466). Saving model!
+2020-09-23 21:35:32,914 - __main__ - INFO - Training is Starting for fold - 2
+2020-09-23 21:50:07,482 - engine - INFO - Jaccard = 0.7009838565342704
+2020-09-23 21:50:07,483 - __main__ - INFO - EPOCHS 0 - Jaccard Score - 0.7009838565342704
+2020-09-23 21:50:07,483 - utils - INFO - Validation score improved (-inf --> 0.7009838565342704). Saving model!
+2020-09-23 22:04:43,493 - engine - INFO - Jaccard = 0.70511673791803
+2020-09-23 22:04:43,493 - __main__ - INFO - EPOCHS 1 - Jaccard Score - 0.70511673791803
+2020-09-23 22:04:43,494 - utils - INFO - Validation score improved (0.7009838565342704 --> 0.70511673791803). Saving model!
+2020-09-23 22:19:21,317 - engine - INFO - Jaccard = 0.7055004241688119
+2020-09-23 22:19:21,317 - __main__ - INFO - EPOCHS 2 - Jaccard Score - 0.7055004241688119
+2020-09-23 22:19:21,317 - utils - INFO - EarlyStopping counter: 1 out of 2
+2020-09-23 22:19:27,141 - __main__ - INFO - Training is Starting for fold - 3
+2020-09-23 22:34:03,023 - engine - INFO - Jaccard = 0.6898002023961061
+2020-09-23 22:34:03,023 - __main__ - INFO - EPOCHS 0 - Jaccard Score - 0.6898002023961061
+2020-09-23 22:34:03,024 - utils - INFO - Validation score improved (-inf --> 0.6898002023961061). Saving model!
+2020-09-23 22:48:40,096 - engine - INFO - Jaccard = 0.7058726299191244
+2020-09-23 22:48:40,096 - __main__ - INFO - EPOCHS 1 - Jaccard Score - 0.7058726299191244
+2020-09-23 22:48:40,097 - utils - INFO - Validation score improved (0.6898002023961061 --> 0.7058726299191244). Saving model!
+2020-09-23 23:03:17,401 - engine - INFO - Jaccard = 0.7092808046663388
+2020-09-23 23:03:17,402 - __main__ - INFO - EPOCHS 2 - Jaccard Score - 0.7092808046663388
+2020-09-23 23:03:17,402 - utils - INFO - Validation score improved (0.7058726299191244 --> 0.7092808046663388). Saving model!
+2020-09-23 23:03:24,978 - __main__ - INFO - Training is Starting for fold - 4
+2020-09-23 23:18:00,338 - engine - INFO - Jaccard = 0.6993878596619573
+2020-09-23 23:18:00,339 - __main__ - INFO - EPOCHS 0 - Jaccard Score - 0.6993878596619573
+2020-09-23 23:18:00,339 - utils - INFO - Validation score improved (-inf --> 0.6993878596619573). Saving model!
+2020-09-23 23:32:38,503 - engine - INFO - Jaccard = 0.7046791010554373
+2020-09-23 23:32:38,504 - __main__ - INFO - EPOCHS 1 - Jaccard Score - 0.7046791010554373
+2020-09-23 23:32:38,504 - utils - INFO - Validation score improved (0.6993878596619573 --> 0.7046791010554373). Saving model!
+2020-09-23 23:47:14,841 - engine - INFO - Jaccard = 0.7002544122718787
+2020-09-23 23:47:14,842 - __main__ - INFO - EPOCHS 2 - Jaccard Score - 0.7002544122718787
+2020-09-23 23:47:14,842 - utils - INFO - EarlyStopping counter: 1 out of 2
+2020-09-25 08:47:33,416 - tensorflow - DEBUG - Falling back to TensorFlow client; we recommended you install the Cloud TPU client directly with pip install cloud-tpu-client.
+2020-09-25 08:49:01,091 - tensorflow - DEBUG - Falling back to TensorFlow client; we recommended you install the Cloud TPU client directly with pip install cloud-tpu-client.
+2020-09-25 08:49:28,596 - tensorflow - DEBUG - Falling back to TensorFlow client; we recommended you install the Cloud TPU client directly with pip install cloud-tpu-client.
+2020-09-25 08:49:52,380 - __main__ - INFO - Training is Starting for fold - 0
+2020-09-25 08:52:42,109 - tensorflow - DEBUG - Falling back to TensorFlow client; we recommended you install the Cloud TPU client directly with pip install cloud-tpu-client.
+2020-09-25 08:52:53,436 - __main__ - INFO - Training is Starting for fold - 0
+2020-09-25 08:54:32,619 - tensorflow - DEBUG - Falling back to TensorFlow client; we recommended you install the Cloud TPU client directly with pip install cloud-tpu-client.
+2020-09-25 08:54:43,640 - __main__ - INFO - Training is Starting for fold - 0
+2020-09-25 09:20:01,728 - engine - INFO - Jaccard = 0.6836886827508973
+2020-09-25 09:20:01,728 - __main__ - INFO - EPOCHS 0 - Jaccard Score - 0.6836886827508973
+2020-09-25 09:20:01,729 - utils - INFO - Validation score improved (-inf --> 0.6836886827508973). Saving model!
+2020-09-25 09:45:21,224 - engine - INFO - Jaccard = 0.6943651667511624
+2020-09-25 09:45:21,224 - __main__ - INFO - EPOCHS 1 - Jaccard Score - 0.6943651667511624
+2020-09-25 09:45:21,224 - utils - INFO - Validation score improved (0.6836886827508973 --> 0.6943651667511624). Saving model!
+2020-09-25 10:10:42,068 - engine - INFO - Jaccard = 0.6984390116703266
+2020-09-25 10:10:42,068 - __main__ - INFO - EPOCHS 2 - Jaccard Score - 0.6984390116703266
+2020-09-25 10:10:42,068 - utils - INFO - Validation score improved (0.6943651667511624 --> 0.6984390116703266). Saving model!
+2020-09-25 10:10:51,147 - __main__ - INFO - Training is Starting for fold - 1
+2020-09-25 10:36:13,020 - engine - INFO - Jaccard = 0.6923691190899456
+2020-09-25 10:36:13,020 - __main__ - INFO - EPOCHS 0 - Jaccard Score - 0.6923691190899456
+2020-09-25 10:36:13,021 - utils - INFO - Validation score improved (-inf --> 0.6923691190899456). Saving model!
+2020-09-25 11:01:32,857 - engine - INFO - Jaccard = 0.6931252749299184
+2020-09-25 11:01:32,857 - __main__ - INFO - EPOCHS 1 - Jaccard Score - 0.6931252749299184
+2020-09-25 11:01:32,857 - utils - INFO - EarlyStopping counter: 1 out of 2
+2020-09-25 11:26:48,525 - engine - INFO - Jaccard = 0.6976650915938277
+2020-09-25 11:26:48,525 - __main__ - INFO - EPOCHS 2 - Jaccard Score - 0.6976650915938277
+2020-09-25 11:26:48,526 - utils - INFO - Validation score improved (0.6923691190899456 --> 0.6976650915938277). Saving model!
+2020-09-25 11:26:58,358 - __main__ - INFO - Training is Starting for fold - 2
+2020-09-25 11:52:18,293 - engine - INFO - Jaccard = 0.690883637920313
+2020-09-25 11:52:18,294 - __main__ - INFO - EPOCHS 0 - Jaccard Score - 0.690883637920313
+2020-09-25 11:52:18,294 - utils - INFO - Validation score improved (-inf --> 0.690883637920313). Saving model!
+2020-09-25 12:17:39,610 - engine - INFO - Jaccard = 0.7032750510403988
+2020-09-25 12:17:39,611 - __main__ - INFO - EPOCHS 1 - Jaccard Score - 0.7032750510403988
+2020-09-25 12:17:39,611 - utils - INFO - Validation score improved (0.690883637920313 --> 0.7032750510403988). Saving model!
+2020-09-25 12:44:07,863 - tensorflow - DEBUG - Falling back to TensorFlow client; we recommended you install the Cloud TPU client directly with pip install cloud-tpu-client.
+2020-09-25 12:44:18,950 - __main__ - INFO - Training is Starting for fold - 2
+2020-09-25 12:46:02,238 - tensorflow - DEBUG - Falling back to TensorFlow client; we recommended you install the Cloud TPU client directly with pip install cloud-tpu-client.
+2020-09-25 12:46:13,220 - __main__ - INFO - Training is Starting for fold - 2
+2020-09-25 13:11:33,034 - engine - INFO - Jaccard = 0.69146634844204
+2020-09-25 13:11:33,038 - __main__ - INFO - EPOCHS 0 - Jaccard Score - 0.69146634844204
+2020-09-25 13:11:33,041 - utils - INFO - Validation score improved (-inf --> 0.69146634844204). Saving model!
+2020-09-25 13:36:57,499 - engine - INFO - Jaccard = 0.7010042160858407
+2020-09-25 13:36:57,499 - __main__ - INFO - EPOCHS 1 - Jaccard Score - 0.7010042160858407
+2020-09-25 13:36:57,500 - utils - INFO - Validation score improved (0.69146634844204 --> 0.7010042160858407). Saving model!
+2020-09-25 14:02:16,391 - engine - INFO - Jaccard = 0.7025612045822351
+2020-09-25 14:02:16,391 - __main__ - INFO - EPOCHS 2 - Jaccard Score - 0.7025612045822351
+2020-09-25 14:02:16,391 - utils - INFO - Validation score improved (0.7010042160858407 --> 0.7025612045822351). Saving model!
+2020-09-25 14:02:25,783 - __main__ - INFO - Training is Starting for fold - 3
+2020-09-25 14:27:45,982 - engine - INFO - Jaccard = 0.6847964335015295
+2020-09-25 14:27:45,982 - __main__ - INFO - EPOCHS 0 - Jaccard Score - 0.6847964335015295
+2020-09-25 14:27:45,982 - utils - INFO - Validation score improved (-inf --> 0.6847964335015295). Saving model!
+2020-09-25 14:53:06,039 - engine - INFO - Jaccard = 0.6996559649405415
+2020-09-25 14:53:06,039 - __main__ - INFO - EPOCHS 1 - Jaccard Score - 0.6996559649405415
+2020-09-25 14:53:06,039 - utils - INFO - Validation score improved (0.6847964335015295 --> 0.6996559649405415). Saving model!
+2020-09-25 15:18:23,622 - engine - INFO - Jaccard = 0.7004009989625228
+2020-09-25 15:18:23,622 - __main__ - INFO - EPOCHS 2 - Jaccard Score - 0.7004009989625228
+2020-09-25 15:18:23,622 - utils - INFO - EarlyStopping counter: 1 out of 2
+2020-09-25 15:18:30,398 - __main__ - INFO - Training is Starting for fold - 4
+2020-09-25 15:43:51,696 - engine - INFO - Jaccard = 0.6977146071809927
+2020-09-25 15:43:51,696 - __main__ - INFO - EPOCHS 0 - Jaccard Score - 0.6977146071809927
+2020-09-25 15:43:51,696 - utils - INFO - Validation score improved (-inf --> 0.6977146071809927). Saving model!
+2020-09-25 16:09:14,582 - engine - INFO - Jaccard = 0.6991873281858243
+2020-09-25 16:09:14,582 - __main__ - INFO - EPOCHS 1 - Jaccard Score - 0.6991873281858243
+2020-09-25 16:09:14,582 - utils - INFO - Validation score improved (0.6977146071809927 --> 0.6991873281858243). Saving model!
+2020-09-25 16:34:33,327 - engine - INFO - Jaccard = 0.7027340470773699
+2020-09-25 16:34:33,328 - __main__ - INFO - EPOCHS 2 - Jaccard Score - 0.7027340470773699
+2020-09-25 16:34:33,330 - utils - INFO - Validation score improved (0.6991873281858243 --> 0.7027340470773699). Saving model!

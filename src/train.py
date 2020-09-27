@@ -95,11 +95,11 @@ def run(fold):
         jaccard=engine.eval_fn(valid_data_loader, model, device)
         print(f"Jaccard Score = {jaccard}")
         logger.info("EPOCHS {} - Jaccard Score - {}".format(epoch, jaccard))
-        es(jaccard, model, model_path=f"../models/model_{fold}.bin")
+        es(jaccard, model, model_path=f"../models/nmodel_{fold}.bin")
         if es.early_stop:
             print("Early stopping")
             break
 
 if __name__ == "__main__":
-    for fold in range(0,5):
+    for fold in range(2,5):
         run(fold)

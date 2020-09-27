@@ -10,7 +10,10 @@ from tqdm import tqdm
 import numpy as np
 df_test = pd.read_csv(config.TEST_FILE)
 df_test.loc[:, "selected_text"] = df_test.text.values
-
+#data = [["Its coming out the socket I feel like my phones hole is not a virgin. That`s how loose it is... :`(","loose it is...", "negative"]]
+# Create the pandas DataFrame 
+# df_test = pd.DataFrame(data, columns = ["text","selected_text","sentiment"]) 
+# df_test.loc[:, "selected_text"] = df_test.text.values
 device = torch.device("cuda")
 model_config = transformers.RobertaConfig.from_pretrained(config.ROBERTA_PATH)
 model_config.output_hidden_states = True
@@ -18,28 +21,28 @@ model_config.output_hidden_states = True
 # Load each of the five trained models and move to GPU
 model1 = TweetModel(conf=model_config)
 model1.to(device)
-model1.load_state_dict(torch.load("../models/model_0.bin"),strict=False)
+model1.load_state_dict(torch.load("../models/nmodel_0.bin")) #strict=False
 # print(model1.eval())
 
 
 model2 = TweetModel(conf=model_config)
 model2.to(device)
-model2.load_state_dict(torch.load("../models/model_1.bin"),strict=False)
+model2.load_state_dict(torch.load("../models/nmodel_1.bin")) #strict=False
 # print(model2.eval())
 
 model3 = TweetModel(conf=model_config)
 model3.to(device)
-model3.load_state_dict(torch.load("../models/model_2.bin"),strict=False)
+model3.load_state_dict(torch.load("../models/nmodel_2.bin"))
 # print(model3.eval())
 
 model4 = TweetModel(conf=model_config)
 model4.to(device)
-model4.load_state_dict(torch.load("../models/model_3.bin"),strict=False)
+model4.load_state_dict(torch.load("../models/nmodel_3.bin"))
 # print(model4.eval())
 
 model5 = TweetModel(conf=model_config)
 model5.to(device)
-model5.load_state_dict(torch.load("../models/model_4.bin"),strict=False)
+model5.load_state_dict(torch.load("../models/nmodel_4.bin"))
 # print(model5.eval())
 
 final_output = []
@@ -79,6 +82,9 @@ with torch.no_grad():
         mask = mask.to(device, dtype=torch.long)
         targets_start = targets_start.to(device, dtype=torch.long)
         targets_end = targets_end.to(device, dtype=torch.long)
+        # print("starts = ", targets_start)
+        # print("Ends = ", targets_end)
+
 
         # Predict start and end logits for each of the five models
         outputs_start1, outputs_end1 = model1(
@@ -113,25 +119,13 @@ with torch.no_grad():
         
         # Get the average start and end logits across the five models and use these as predictions
         # This is a form of "ensembling"
-        outputs_start = (
-            outputs_start1 
-            + outputs_start2 
-            + outputs_start3 
-            + outputs_start4 
-            + outputs_start5
-        ) / 5
-        outputs_end = (
-            outputs_end1 
-            + outputs_end2 
-            + outputs_end3 
-            + outputs_end4 
-            + outputs_end5
-        ) / 5
+        outputs_start = ( outputs_start1 + outputs_start2 + outputs_start3 + outputs_start4 + outputs_start5) / 5
+        outputs_end = (outputs_end1 + outputs_end2 + outputs_end3 + outputs_end4 + outputs_end5) / 5
         
         # Apply softmax to the predicted start and end logits
         outputs_start = torch.softmax(outputs_start, dim=1).cpu().detach().numpy()
         outputs_end = torch.softmax(outputs_end, dim=1).cpu().detach().numpy()
-
+        #print(np.argmax(outputs_start[0, :]),np.argmax(outputs_end[0, :]))
         # Convert the start and end scores to actual predicted spans (in string form)
         for px, tweet in enumerate(orig_tweet):
             selected_tweet = orig_selected[px]
@@ -142,14 +136,17 @@ with torch.no_grad():
                 sentiment_val=tweet_sentiment,
                 idx_start=np.argmax(outputs_start[px, :]),
                 idx_end=np.argmax(outputs_end[px, :]),
-                offsets=offsets[px]
+                offsets=offsets[px],
+                verbose=True
             )
             final_output.append(output_sentence)
 
 def post_process(selected):
     return " ".join(set(selected.lower().split()))
-
-df_test.loc[:, 'orig_selected'] = final_output
-df_test.loc[:, 'selected_text'] = final_output
-df_test.selected_text = df_test.selected_text.map(post_process)
-df_test.to_csv("../input/submission.csv", index=False)
+#print(final_output)
+#df_test.loc[:, 'selected_text'] = final_output
+#df_test.selected_text = df_test.selected_text.map(post_process)
+sample = pd.read_csv("../input/sample_submission.csv")
+sample.loc[:, 'selected_text'] = final_output
+#sample.selected_text = sample.selected_text.map(post_process)
+sample.to_csv("../input/submission101.csv", index=False)

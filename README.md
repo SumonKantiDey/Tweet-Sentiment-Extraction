@@ -17,6 +17,9 @@ def jaccard(str1, str2):
  
 # Summary of my approach
 ```
-- Used  Bert-Base-Uncased pre-trained models
-- Holdout validation is around 0.59
+- 5-fold model with original sentiment . Val Acc: 0.70.
+- CNN layer to enhance feature extraction for span prediction.
+- concat last 2 layers of RoBERTa output.
+- Postprocessing technique.
 ```
+-- Bert Base Uncased implementation Found [Here](https://github.com/SumonKantiDey/Tweet-Sentiment-Extraction/tree/Bert-Base-Uncased).
